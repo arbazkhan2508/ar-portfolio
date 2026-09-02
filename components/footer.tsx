@@ -1,12 +1,49 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Footer() {
+  const [activeSection, setActiveSection] = useState<string>("work");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["work", "capabilities", "toolkit", "experience", "about", "contact"];
+      const scrollPosition = window.scrollY + 350;
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Links in exact sequence of homepage sections
+  const navLinks = [
+    { name: "Work", href: "/#work", id: "work" },
+    { name: "What I Bring", href: "/#capabilities", id: "capabilities" },
+    { name: "Toolkit", href: "/#toolkit", id: "toolkit" },
+    { name: "Experience", href: "/#experience", id: "experience" },
+    { name: "About", href: "/#about", id: "about" },
+    { name: "Contact", href: "/#contact", id: "contact" },
+  ];
 
   return (
     <footer className="border-t border-zinc-800 bg-[#09090b] py-12 relative">
@@ -24,23 +61,25 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-zinc-400">
-            <Link href="/#work" className="hover:text-white transition-colors">
-              Work
-            </Link>
-            <Link href="/#about" className="hover:text-white transition-colors">
-              About
-            </Link>
-            <Link href="/#experience" className="hover:text-white transition-colors">
-              Experience
-            </Link>
-            <Link href="/#toolkit" className="hover:text-white transition-colors">
-              Toolkit
-            </Link>
-            <Link href="/#contact" className="hover:text-white transition-colors">
-              Contact
-            </Link>
+          {/* Quick Links (EXACT HOMEPAGE SEQUENCE + DYNAMIC SCROLL-SPY FOCUS) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-zinc-400">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={cn(
+                    "px-3 py-1 rounded-full transition-all duration-300",
+                    isActive
+                      ? "text-white bg-blue-600 font-bold shadow-md shadow-blue-500/25 scale-105"
+                      : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Back to Top */}

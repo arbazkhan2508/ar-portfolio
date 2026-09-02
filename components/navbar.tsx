@@ -9,27 +9,48 @@ import { cn } from "@/lib/utils";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("work");
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
+      // Background blur scroll state
       if (window.scrollY > 20) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
+
+      // Active section scroll-spy matching homepage section sequence
+      const sections = ["work", "capabilities", "toolkit", "experience", "about", "contact"];
+      const scrollPosition = window.scrollY + 250;
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Links in exact sequence of homepage sections
   const navLinks = [
-    { name: "Work", href: "/#work" },
-    { name: "About", href: "/#about" },
-    { name: "Experience", href: "/#experience" },
-    { name: "Toolkit", href: "/#toolkit" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Work", href: "/#work", id: "work" },
+    { name: "What I Bring", href: "/#capabilities", id: "capabilities" },
+    { name: "Toolkit", href: "/#toolkit", id: "toolkit" },
+    { name: "Experience", href: "/#experience", id: "experience" },
+    { name: "About", href: "/#about", id: "about" },
+    { name: "Contact", href: "/#contact", id: "contact" },
   ];
 
   return (
@@ -42,6 +63,7 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+
         {/* Brand / Name */}
         <Link href="/" className="group flex items-center gap-3 text-left">
           <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-700/60 group-hover:border-blue-500/60 transition-colors">
@@ -63,18 +85,18 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links (EXACT HOMEPAGE SEQUENCE + ACTIVE SCROLL-SPY) */}
         <nav className="hidden md:flex items-center gap-1 rounded-full bg-zinc-900/70 border border-zinc-800/80 px-4 py-1.5 backdrop-blur-md">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = activeSection === link.id;
             return (
               <Link
                 key={link.name}
                 href={link.href}
                 className={cn(
-                  "px-3.5 py-1.5 text-xs font-medium rounded-full transition-all duration-200",
+                  "px-3.5 py-1.5 text-xs font-mono transition-all duration-300 rounded-full",
                   isActive
-                    ? "text-white bg-zinc-800"
+                    ? "text-white bg-blue-600 font-bold shadow-md shadow-blue-500/25 scale-105"
                     : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
                 )}
               >
@@ -109,17 +131,23 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#09090b]/95 backdrop-blur-2xl border-b border-zinc-800/80 px-6 py-6 transition-all animate-in slide-in-from-top-5">
           <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-medium text-zinc-300 hover:text-white py-2 border-b border-zinc-900 flex items-center justify-between"
-              >
-                <span>{link.name}</span>
-                <span className="text-xs font-mono text-zinc-600">0{navLinks.indexOf(link) + 1}</span>
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "text-base font-mono py-2 border-b border-zinc-900 flex items-center justify-between transition-colors",
+                    isActive ? "text-blue-400 font-bold" : "text-zinc-300 hover:text-white"
+                  )}
+                >
+                  <span>{link.name}</span>
+                  <span className="text-xs font-mono text-zinc-500">0{navLinks.indexOf(link) + 1}</span>
+                </Link>
+              );
+            })}
             <div className="pt-2">
               <Link
                 href="/#contact"

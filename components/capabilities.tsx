@@ -1,122 +1,196 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Lightbulb, Rocket, Layout, ShieldCheck, Check } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Lightbulb,
+  Rocket,
+  Layout,
+  ShieldCheck,
+  CheckCircle2,
+  Sparkles,
+  ArrowRight,
+  Plus,
+  Minus,
+} from "lucide-react";
 
 export default function Capabilities() {
-  const capabilities = [
+  const [activeItem, setActiveItem] = useState<number | null>(0);
+
+  const pillars = [
     {
+      number: "01",
       icon: Lightbulb,
-      title: "Product Thinking",
-      tagline: "Strategy Before Code",
+      title: "Strategic Product Architecture",
+      subtitle: "Business Goals & User Flow Alignment",
       description:
-        "I don't just write code — I seek to thoroughly understand business goals, target user flows, and product constraints before building.",
+        "I don't just write lines of code — I analyze business requirements, map out seamless user journeys, and architect clean Next.js systems built for conversion.",
       highlights: [
-        "User workflow mapping",
-        "Business goal alignment",
-        "Feature prioritization",
+        "User workflow mapping & UI wireframing",
+        "Business metric alignment & feature scoping",
+        "Scalable component & state architecture",
       ],
+      tag: "STRATEGY & SCOPE",
     },
     {
+      number: "02",
       icon: Rocket,
-      title: "Production Experience",
-      tagline: "Tested in the Real World",
+      title: "Production Execution & API Integrations",
+      subtitle: "Payment Gateways & Live Systems",
       description:
-        "3+ years of experience shipping production web applications, custom API integrations, payment webhooks, and live client software.",
+        "3+ years of experience shipping production web platforms. Expertise in Cashfree & Stripe payment gateways, custom webhooks, RESTful APIs, and Vercel CI/CD.",
       highlights: [
-        "Payment & auth integrations",
-        "API architecture & state",
-        "Sub-second loading times",
+        "Cashfree & Stripe API webhooks",
+        "REST API architecture & error handling",
+        "Vercel automated deployment pipelines",
       ],
+      tag: "PRODUCTION READY",
     },
     {
+      number: "03",
       icon: Layout,
-      title: "Pixel-Perfect UI",
-      tagline: "Design & UX Rigor",
+      title: "High-Impact UI & Motion UX",
+      tagline: "PIXEL-PERFECT DESIGN RIGOR",
+      subtitle: "Fluid Layouts & Micro-Animations",
       description:
-        "Specialized in crafting clean, responsive, high-converting interfaces with meticulous attention to spacing, typography, motion, and mobile feel.",
+        "Specialized in crafting clean, responsive dark-mode interfaces with zero layout shift, fluid typography, and hardware-accelerated Framer Motion spring physics.",
       highlights: [
         "Mobile-first responsive layouts",
-        "Fluid typography & dark themes",
-        "Subtle micro-animations",
+        "Framer Motion spring physics & drag",
+        "Modern dark-mode glassmorphism aesthetics",
       ],
+      tag: "DESIGN & MOTION",
     },
     {
+      number: "04",
       icon: ShieldCheck,
-      title: "Reliable Development",
-      tagline: "Maintainable & Scalable",
+      title: "Technical Reliability & Clean Code",
+      subtitle: "Sub-Second Speed & TypeScript Rigor",
       description:
-        "Clean TypeScript codebase, modular component structures, semantic HTML5, and strict adherence to modern web standards.",
+        "Strict TypeScript typing, modular React component architecture, optimized asset pipelines, and adherence to 98+ Lighthouse Core Web Vitals.",
       highlights: [
-        "Strong TypeScript typing",
-        "Modular React architecture",
-        "Vercel production setup",
+        "Strict TypeScript type safety",
+        "Sub-second page load performance",
+        "Maintainable, clean codebase setup",
       ],
+      tag: "PERFORMANCE & CODE",
     },
   ];
 
   return (
-    <section id="capabilities" className="py-24 relative bg-zinc-950/60 border-t border-zinc-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="capabilities" className="py-24 relative bg-zinc-950 border-t border-zinc-800/80 overflow-hidden">
+      
+      {/* Subtle ambient lighting blur */}
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="mb-16 space-y-3 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-blue-400">
-            <span>02 / CLIENT VALUE</span>
+        {/* Editorial Header (No Cards) */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 pb-6 border-b border-zinc-800/80 gap-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-blue-400">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>02 / VALUE PROPOSITION</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+              What I Bring
+            </h2>
+            <p className="text-zinc-400 text-base sm:text-lg max-w-xl">
+              Engineering discipline combined with design awareness to build high-converting, reliable production software.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
-            What I Bring
-          </h2>
-          <p className="text-zinc-400 text-base sm:text-lg">
-            Engineering discipline combined with strong design awareness to turn ideas into reliable production platforms.
-          </p>
+
+          <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden lg:block">
+            ✦ NO COMPROMISE PRODUCTION STANDARDS
+          </div>
         </div>
 
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {capabilities.map((cap, idx) => {
-            const Icon = cap.icon;
+        {/* Clean Editorial Accordion List (NO CARDS / NO BOXES) */}
+        <div className="space-y-0 border-t border-zinc-800/80">
+          {pillars.map((item, index) => {
+            const isOpen = activeItem === index;
+            const Icon = item.icon;
+
             return (
-              <motion.div
-                key={cap.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group relative rounded-2xl bg-zinc-900/80 border border-zinc-800/80 p-6 sm:p-8 hover:border-zinc-700 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+              <div
+                key={item.number}
+                className="border-b border-zinc-800/80 transition-colors duration-300 group"
               >
-                <div className="space-y-4">
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 group-hover:border-blue-500/50 group-hover:text-white transition-colors">
-                    <Icon className="w-6 h-6" />
-                  </div>
-
-                  {/* Title */}
-                  <div>
-                    <span className="text-[11px] font-mono text-zinc-500 tracking-wider uppercase block">
-                      {cap.tagline}
+                {/* Main Interactive Row Header */}
+                <button
+                  onClick={() => setActiveItem(isOpen ? null : index)}
+                  className="w-full py-6 sm:py-8 flex items-center justify-between text-left group-hover:px-2 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-6 sm:gap-10">
+                    <span className={`font-mono text-xl sm:text-2xl font-bold transition-colors ${
+                      isOpen ? "text-blue-400" : "text-zinc-600 group-hover:text-zinc-400"
+                    }`}>
+                      {item.number}
                     </span>
-                    <h3 className="text-xl font-bold text-white tracking-tight mt-1">
-                      {cap.title}
-                    </h3>
+
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <h3 className={`text-xl sm:text-2xl font-bold tracking-tight transition-colors ${
+                          isOpen ? "text-white" : "text-zinc-300 group-hover:text-white"
+                        }`}>
+                          {item.title}
+                        </h3>
+                        <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-blue-400 font-medium">
+                          {item.tag}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-zinc-500 font-mono mt-1">
+                        {item.subtitle}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-sm text-zinc-400 leading-relaxed">
-                    {cap.description}
-                  </p>
-                </div>
+                  <div className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
+                    isOpen
+                      ? "bg-blue-600 border-blue-500 text-white rotate-180"
+                      : "bg-zinc-900 border-zinc-800 text-zinc-400 group-hover:text-white group-hover:border-zinc-700"
+                  }`}>
+                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  </div>
+                </button>
 
-                {/* Bullet Points */}
-                <div className="pt-6 mt-6 border-t border-zinc-800/80 space-y-2">
-                  {cap.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-medium text-zinc-300">
-                      <Check className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                      <span>{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+                {/* Collapsible Content Body */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-8 pl-12 sm:pl-20 pr-4 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                        
+                        {/* Left: Description */}
+                        <div className="lg:col-span-7 space-y-4">
+                          <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
+                            {item.description}
+                          </p>
+                        </div>
+
+                        {/* Right: Highlights List */}
+                        <div className="lg:col-span-5 bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800/80 space-y-2.5">
+                          <span className="text-[10px] font-mono text-blue-400 uppercase tracking-widest font-bold block mb-1">
+                            Key Deliverables & Standards:
+                          </span>
+                          {item.highlights.map((h, i) => (
+                            <div key={i} className="flex items-center gap-2.5 text-xs text-zinc-300">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                              <span>{h}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             );
           })}
         </div>
