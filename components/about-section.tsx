@@ -24,10 +24,10 @@ export default function AboutSection() {
               {/* Image Frame */}
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
+                  src="/my-photo.jpeg"
                   alt="Arbaz Khan — Frontend Engineer"
                   fill
-                  className="object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700"
+                  className="object-cover object-top hover:scale-105 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80" />
                 
