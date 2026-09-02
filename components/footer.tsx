@@ -101,7 +101,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-4 text-zinc-400">
             <a
-              href="https://github.com/arbazkhan"
+              href="https://github.com/arbazkhan2508"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors"
@@ -110,7 +110,7 @@ export default function Footer() {
               <Github className="w-4 h-4" />
             </a>
             <a
-              href="https://linkedin.com/in/arbazkhan-dev"
+              href="https://linkedin.com/in/arbazkhandev"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors"
@@ -119,7 +119,7 @@ export default function Footer() {
               <Linkedin className="w-4 h-4" />
             </a>
             <a
-              href="mailto:arbaz.dev.work@gmail.com"
+              href="mailto:arbazkhandev02@gmail.com"
               className="hover:text-white transition-colors"
               aria-label="Email Direct"
             >

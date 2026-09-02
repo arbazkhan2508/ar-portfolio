@@ -42,7 +42,7 @@ export default function ContactSection() {
           <div className="lg:col-span-5 space-y-8 text-left">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-blue-400">
-                <span>07 / INITIATE CONTACT</span>
+                <span>06 / INITIATE CONTACT</span>
               </div>
               <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1]">
                 Have something <br className="hidden sm:inline" />
@@ -55,65 +55,65 @@ export default function ContactSection() {
 
             {/* Direct Links */}
             <div className="space-y-4 pt-4 border-t border-zinc-800">
-              
-              {/* Email Button */}
-              <a
-                href="mailto:arbaz.dev.work@gmail.com"
-                className="group flex items-center justify-between p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 hover:border-blue-500/50 transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 group-hover:text-white transition-colors">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-zinc-500 uppercase">Direct Email</div>
-                    <div className="text-sm font-semibold text-white group-hover:text-blue-300 transition-colors">
-                      arbaz.dev.work@gmail.com
+              <div className="rounded-2xl bg-zinc-900/80 border border-zinc-800/80 p-6 space-y-4 shadow-xl">
+                <a
+                  href="mailto:arbazkhandev02@gmail.com"
+                  className="group block p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-blue-500/60 transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-blue-400">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-mono text-zinc-500 uppercase">Direct Email</div>
+                        <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
+                          arbazkhandev02@gmail.com
+                        </div>
+                      </div>
                     </div>
+                    <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-blue-400 transition-colors" />
                   </div>
+                </a>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <a
+                    href="https://github.com/arbazkhan2508"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-zinc-700 transition-all"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold text-white">
+                      <Github className="w-4 h-4 text-zinc-400 group-hover:text-white" />
+                      <span>GitHub</span>
+                    </div>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-white" />
+                  </a>
+
+                  <a
+                    href="https://linkedin.com/in/arbazkhandev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-zinc-700 transition-all"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold text-white">
+                      <Linkedin className="w-4 h-4 text-zinc-400 group-hover:text-white" />
+                      <span>LinkedIn</span>
+                    </div>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-white" />
+                  </a>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-
-              {/* Social Row */}
-              <div className="grid grid-cols-2 gap-4">
-                <a
-                  href="https://github.com/arbazkhan"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Github className="w-4 h-4 text-zinc-400 group-hover:text-white" />
-                    <span className="text-xs font-medium text-zinc-200">GitHub</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500" />
-                </a>
-
-                <a
-                  href="https://linkedin.com/in/arbazkhan-dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Linkedin className="w-4 h-4 text-zinc-400 group-hover:text-white" />
-                    <span className="text-xs font-medium text-zinc-200">LinkedIn</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500" />
-                </a>
               </div>
 
-            </div>
-
-            <div className="p-4 rounded-2xl bg-blue-950/20 border border-blue-900/40 text-xs text-blue-300 space-y-1">
-              <div className="font-semibold flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Available for New Client Projects
+              <div className="p-4 rounded-2xl bg-blue-950/20 border border-blue-900/40 text-xs text-blue-300 space-y-1">
+                <div className="font-semibold flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Available for New Client Projects
+                </div>
+                <p className="text-zinc-400 text-[11px]">
+                  Typical response time: Within 12–24 hours.
+                </p>
               </div>
-              <p className="text-zinc-400 text-[11px]">
-                Typical response time: Within 12–24 hours.
-              </p>
             </div>
 
           </div>
