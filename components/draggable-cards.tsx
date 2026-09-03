@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Globe, ArrowUpRight, Move, RefreshCw, Sparkles } from "lucide-react";
+import { Globe, ArrowUpRight, Move, RefreshCw } from "lucide-react";
 
 interface CardData {
   id: string;
@@ -49,6 +49,11 @@ export default function DraggableCards() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [topCardId, setTopCardId] = useState<string>("travquest");
   const [resetKey, setResetKey] = useState<number>(0);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleCardClick = (id: string) => {
     setTopCardId(id);
@@ -72,7 +77,7 @@ export default function DraggableCards() {
 
         <button
           onClick={resetPositions}
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-xs font-mono transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 light:bg-slate-200 hover:bg-zinc-800 border border-zinc-800 light:border-slate-300 text-zinc-400 light:text-slate-700 hover:text-white light:hover:text-slate-900 text-xs font-mono transition-colors"
           title="Reset card positions"
         >
           <RefreshCw className="w-3 h-3" />
@@ -83,7 +88,7 @@ export default function DraggableCards() {
       {/* Draggable Playground Container */}
       <div
         ref={containerRef}
-        className="relative w-full aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] rounded-3xl bg-zinc-950/60 border border-zinc-800/80 p-4 overflow-hidden shadow-2xl backdrop-blur-md select-none cursor-grab active:cursor-grabbing"
+        className="relative w-full min-h-[420px] sm:min-h-[480px] aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] rounded-3xl bg-zinc-950/60 light:bg-slate-100/90 border border-zinc-800/80 light:border-slate-300 p-4 overflow-hidden shadow-2xl backdrop-blur-md select-none cursor-grab active:cursor-grabbing"
       >
         {/* Background Grid Pattern inside container */}
         <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
@@ -95,8 +100,8 @@ export default function DraggableCards() {
           return (
             <motion.div
               key={`${card.id}-${resetKey}`}
-              drag
-              dragConstraints={containerRef}
+              drag={mounted ? true : false}
+              dragConstraints={mounted ? containerRef : undefined}
               dragElastic={0.15}
               whileDrag={{ scale: 1.05, cursor: "grabbing", zIndex: 50 }}
               whileHover={{ scale: 1.02 }}
@@ -108,40 +113,42 @@ export default function DraggableCards() {
                 right: card.initialPos.right,
                 zIndex: zIndex,
               }}
-              initial={{ rotate: card.initialPos.rotate, opacity: 0, scale: 0.9 }}
+              initial={false}
               animate={{ rotate: isTop ? 0 : card.initialPos.rotate, opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-              className={`absolute w-[88%] sm:w-[84%] rounded-2xl bg-zinc-900 border transition-colors duration-300 p-3 shadow-2xl backdrop-blur-xl ${
+              transition={{ duration: 0.3 }}
+              className={`absolute w-[88%] sm:w-[84%] rounded-2xl bg-zinc-900 light:bg-white border transition-colors duration-300 p-3 shadow-2xl backdrop-blur-xl ${
                 isTop
                   ? "border-blue-500/80 shadow-blue-500/20"
-                  : "border-zinc-800/80 hover:border-zinc-700"
+                  : "border-zinc-800/80 light:border-slate-200 hover:border-zinc-700"
               }`}
             >
               {/* Card Browser Bar */}
-              <div className="flex items-center justify-between px-2 pb-2 border-b border-zinc-800/80 mb-2.5">
+              <div className="flex items-center justify-between px-2 pb-2 border-b border-zinc-800/80 light:border-slate-200 mb-2.5">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
                   <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                 </div>
 
-                <span className="text-[10px] font-mono text-zinc-400 flex items-center gap-1">
+                <span className="text-[10px] font-mono text-zinc-400 light:text-slate-600 flex items-center gap-1">
                   <Globe className="w-3 h-3 text-blue-400" />
                   {card.domain}
                 </span>
 
-                <span className="text-[10px] font-mono text-zinc-500 flex items-center gap-1">
+                <span className="text-[10px] font-mono text-zinc-500 light:text-slate-400 flex items-center gap-1">
                   <Move className="w-2.5 h-2.5 text-zinc-400" />
                   DRAG
                 </span>
               </div>
 
               {/* Card Image Display */}
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-zinc-800 group">
+              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-zinc-800 light:border-slate-200 group bg-zinc-950">
                 <Image
                   src={card.image}
                   alt={card.title}
                   fill
+                  sizes="(max-width: 768px) 85vw, 400px"
+                  priority
                   className="object-cover pointer-events-none"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent p-3.5 flex flex-col justify-end">
